@@ -350,7 +350,9 @@ void OdmTexturing::loadCameras()
         }
         else
         {
-            cam.texture_file = imagesPath_ + "/" + dummyLine.substr(2);
+	  // switched to 10 to account for "visualize"
+            cam.texture_file = imagesPath_ + "/" + dummyLine.substr(10);
+	    //std::cout << "Hello" << std::endl;
         }
 
         // Read image to get full resolution size
