@@ -364,7 +364,8 @@ void OdmOrthoPhoto::createOrthoPhoto()
     }
 
     // Init ortho photo
-    photo_ = cv::Mat::zeros(rowRes, colRes, CV_8UC3) + cv::Scalar(255, 255, 255);
+    photo_ = cv::Mat::zeros(rowRes, colRes, CV_8UC4) + cv::Scalar(255, 255, 255, 0);
+    // init photo with transparency
     depth_ = cv::Mat::zeros(rowRes, colRes, CV_32F) - std::numeric_limits<float>::infinity();
 
     // Contains the vertices of the mesh.
@@ -908,7 +909,8 @@ void OdmOrthoPhoto::renderPixel(int row, int col, float s, float t, const cv::Ma
     b += static_cast<float>(bl[0]) * dr * dt;
     b += static_cast<float>(br[0]) * dl * dt;
     
-    photo_.at<cv::Vec3b>(row,col) = cv::Vec3b(static_cast<unsigned char>(b), static_cast<unsigned char>(g), static_cast<unsigned char>(r));
+    //photo_.at<cv::Vec3b>(row,col) = cv::Vec3b(static_cast<unsigned char>(b), static_cast<unsigned char>(g), static_cast<unsigned char>(r));
+    photo_.at<cv::Vec4b>(row,col) = cv::Vec4b(static_cast<unsigned char>(b), static_cast<unsigned char>(g), static_cast<unsigned char>(r),UCHAR_MAX);
 }
 
 void OdmOrthoPhoto::getBarycentricCoordiantes(pcl::PointXYZ v1, pcl::PointXYZ v2, pcl::PointXYZ v3, float x, float y, float &l1, float &l2, float &l3) const
